@@ -21,4 +21,14 @@ class Test_Home(BaseTest):
         assert homePage.is_watch_button_exists()
 
 
+    def test_home_page_menu(self):
+        self.loginPage = LoginPage(self.driver)
+        homePage = self.loginPage.do_login(TestData.USER_NAME, TestData.PASSWORD)
+        assert homePage.is_menu_exists()
+
+    def test_home_page_search(self):
+        self.loginPage = LoginPage(self.driver)
+        homePage = self.loginPage.do_login(TestData.USER_NAME, TestData.PASSWORD)
+        assert homePage.is_search_exists()
+
 
