@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 """It contains all the generic methods and utilities for all pages"""
 class BasePage:
      def __init__(self, driver):
-        super().__init__(driver)
+        self.driver = driver
 
      def do_click(self, by_locator):
          WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(by_locator)).click()

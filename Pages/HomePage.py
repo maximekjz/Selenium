@@ -28,8 +28,7 @@ class HomePage(BasePage):
         return self.is_visible(self.SEARCH)
 
     def get_header_value(self):
-        if self.get_element_text(self.HEADER):
-            return self.HEADER
+        return self.get_element_text(self.HEADER)
 
 
 
