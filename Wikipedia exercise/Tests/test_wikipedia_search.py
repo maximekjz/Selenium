@@ -1,17 +1,19 @@
+import pytest
 from .test_base import BaseTest
 from Config.config import TestData
 from Pages.home_page import HomePage
 
 
 class TestWikipediaSearch(BaseTest):
-    def setup_method(self):
+    @pytest.fixture(autouse=True)
+    def setup(self, init_driver):
+        self.driver = init_driver
         self.home_page = HomePage(self.driver)
 
     def test_search_functionality(self):
         search_page = self.home_page.do_search(TestData.SEARCH_FIELD_CONTENT)
         assert search_page.is_at_search_result_page(), "Not on search result page"
-        assert search_page.search_results_contain(
-            TestData.SEARCH_FIELD_CONTENT), "Search results do not contain the search term"
+        assert search_page.search_results_contain(TestData.SEARCH_FIELD_CONTENT), "Search results do not contain the search term"
 
     def test_search_button_visible(self):
         assert self.home_page.is_search_button_visible(), "Search button is not visible"

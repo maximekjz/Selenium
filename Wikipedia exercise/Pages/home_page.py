@@ -2,15 +2,15 @@ from selenium.webdriver.common.by import By
 from .search_result_page import SearchResult
 from Config.config import TestData
 from .BasePage import BasePage
+from selenium.common.exceptions import TimeoutException
 
 class HomePage(BasePage):
 
     #Log in variables
     USERNAME = (By.ID, 'wpName1')
     PASSWORD = (By.ID, 'wpPassword1')
-    LOGIN_BUTTON = (By.ID, 'wpLoginButton')
-    SIGNIN_TITLE = (By.ID, 'wpSigninTitle')
-    KEEP_LOGGED_IN = (By.ID, 'wpKeepLoggedIn')
+    LOGIN_BUTTON = (By.ID, 'wpLoginAttempt')
+    KEEP_LOGGED_IN = (By.CSS_SELECTOR, '.cdx-checkbox__icon')
     FEATURED_ARTICLE_TITLE = (By.ID, "From_today's_featured_article")
     FEATURED_ARTICLE_CONTENT = (By.ID, "From_today.27s_featured_article")
     DID_U_KNOW_TITLE = (By.ID, "Did_you_know_...")
@@ -25,22 +25,27 @@ class HomePage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
+        self.driver.get(TestData.MAIN_URL)
 
-    def get_logged_in_page_title(self, title):
-        return self.get_title(title)
+    def go_to_login_page(self):
+        self.driver.get(TestData.LOG_URL)
 
     def is_login_title_exists(self):
         return self.is_visible(self.LOGIN_BUTTON)
 
-    def is_signin_link_exists(self):
-        return self.is_visible(self.SIGNIN_TITLE)
 
     def do_login(self, username, password):
-        self.do_send_keys(self.USERNAME, username)
-        self.do_send_keys(self.PASSWORD, password)
-        self.do_click(self.KEEP_LOGGED_IN)
-        self.do_click(self.LOGIN_BUTTON)
-        return HomePage(self.driver)
+        try:
+            self.do_send_keys(self.USERNAME, username)
+            self.do_send_keys(self.PASSWORD, password)
+            #self.do_click(self.KEEP_LOGGED_IN).   Why it doesn't work ?
+            self.do_click(self.LOGIN_BUTTON)
+            return HomePage(self.driver)
+        except TimeoutException as e:
+            print(f"Error during login: {str(e)}")
+            print(f"Current URL: {self.driver.current_url}")
+            print(f"Page source: {self.driver.page_source}")
+            raise
 
     def new_url(self):
         self.is_url_new(TestData.LOG_URL)
