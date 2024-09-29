@@ -1,8 +1,11 @@
 from .test_base import BaseTest
 from Config.config import TestData
+from Pages.home_page import HomePage
 
 
 class TestWikipediaSearch(BaseTest):
+    def setup_method(self):
+        self.home_page = HomePage(self.driver)
 
     def test_search_functionality(self):
         search_page = self.home_page.do_search(TestData.SEARCH_FIELD_CONTENT)

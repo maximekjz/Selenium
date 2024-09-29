@@ -1,8 +1,9 @@
 from .test_base import BaseTest
-from .home_page import HomePage
+from Pages.home_page import HomePage
 from Config.config import TestData
 
 class Test_Home(BaseTest):
+
 
     def test_signin_link_visible(self):
         self.homePage = HomePage(self.driver)

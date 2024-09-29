@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from .search_result_page import SearchResult
-from Introduction.Config.config import TestData
-from BasePage import BasePage
+from Config.config import TestData
+from .BasePage import BasePage
 
 class HomePage(BasePage):
 
@@ -18,8 +18,8 @@ class HomePage(BasePage):
     SISTER_PROJECTS = (By.ID, "Wikipedia's_sister_projects")
     WELCOME = (By.ID, 'mp-welcomecount')
     LANGUAGE_DROPDOWN = (By.ID, "searchLanguage")
-    SEARCH_BUTTON = (By.CSS_SELECTOR, 'cdx-button cdx-button--action-default cdx-button--weight-normal cdx-button--size-medium cdx-button--framed cdx-search-input__end-button')
-    SEARCH_FIELD = (By.CSS_SELECTOR, 'cdx-text-input cdx-text-input--has-start-icon cdx-text-input--status-default cdx-search-input__text-input')
+    SEARCH_BUTTON = (By.CSS_SELECTOR, '.cdx-button.cdx-button--action-default.cdx-button--weight-normal.cdx-button--size-medium.cdx-button--framed.cdx-search-input__end-button')
+    SEARCH_FIELD = (By.CSS_SELECTOR, '.cdx-text-input.cdx-text-input--has-start-icon.cdx-text-input--status-default.cdx-search-input__text-input')
     SEARCH_SUGGESTIONS = (By.CSS_SELECTOR, '.cdx-menu-item__text')
 
 
@@ -57,7 +57,7 @@ class HomePage(BasePage):
 
     def change_language(self, language_code):
         dropdown = self.get_element(self.LANGUAGE_DROPDOWN)
-        dropdown.send_keys(language_code)
+        dropdown.select_by_value(language_code)
 
     def do_search(self, search_content):
         self.do_send_keys(self.SEARCH_FIELD, search_content)
