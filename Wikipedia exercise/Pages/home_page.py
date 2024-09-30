@@ -68,7 +68,7 @@ class HomePage(BasePage):
     def is_search_field_visible(self):
         return self.is_visible(self.SEARCH_FIELD)
 
-    def search_suggestions_visible(self):
+    def is_search_suggestions_visible(self):
         return self.is_visible(self.SEARCH_SUGGESTIONS)
 
     def change_language(self):
