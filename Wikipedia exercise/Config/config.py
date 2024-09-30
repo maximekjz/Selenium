@@ -9,5 +9,6 @@ class TestData:
     HOME_PAGE_TITLE = 'Log in - Wikipedia'
     ACCOUNT_NAME = 'Maximetest'
     SEARCH_FIELD_CONTENT = 'Agora'
+    LANGUAGE = 'English'
 
 
