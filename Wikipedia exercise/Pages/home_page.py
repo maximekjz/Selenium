@@ -11,7 +11,7 @@ class HomePage(BasePage):
     PASSWORD = (By.ID, 'wpPassword1')
     LOGIN_BUTTON = (By.ID, 'wpLoginAttempt')
     LOG_IN_LINK = (By.XPATH, "//a[span[text()='Log in']]")
-    KEEP_LOGGED_IN = (By.CSS_SELECTOR, '.cdx-checkbox__icon')
+    KEEP_LOGGED_IN = (By.ID, '.wpRemember')
     FEATURED_ARTICLE_TITLE = (By.ID, "From_today's_featured_article")
     FEATURED_ARTICLE_CONTENT = (By.ID, "From_today.27s_featured_article")
     DID_U_KNOW_TITLE = (By.ID, "Did_you_know_...")
@@ -19,10 +19,10 @@ class HomePage(BasePage):
     SISTER_PROJECTS = (By.ID, "Wikipedia's_sister_projects")
     WELCOME = (By.ID, 'mp-welcomecount')
     LANGUAGE_DROPDOWN = (By.ID, "p-lang-btn-checkbox")
-    LANGUAGE_CHOSEN = (By.CSS_SELECTOR, "a.autonym[lang='he']")
-    SEARCH_BUTTON = (By.CSS_SELECTOR, '.cdx-button.cdx-button--action-default.cdx-button--weight-normal.cdx-button--size-medium.cdx-button--framed.cdx-search-input__end-button')
-    SEARCH_FIELD = (By.CSS_SELECTOR, '.cdx-text-input__input')
-    SEARCH_SUGGESTIONS = (By.CSS_SELECTOR, '.cdx-menu-item__text')
+    LANGUAGE_CHOSEN = (By.XPATH, '//a[@class="autonym" and @lang="he" and @dir="rtl"]')
+    SEARCH_BUTTON = (By.CLASS_NAME, "cdx-search-input__end-button")
+    SEARCH_FIELD = (By.CLASS_NAME, '.cdx-text-input__input')
+    SEARCH_SUGGESTIONS = (By.CLASS_NAME, '.cdx-menu-item__text')
 
 
     def __init__(self, driver):
