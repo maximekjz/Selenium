@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from .search_result_page import SearchResult
 from Config.config import TestData
@@ -7,29 +9,30 @@ from selenium.common.exceptions import TimeoutException
 class HomePage(BasePage):
 
     #Log in variables
+    # TODO Variables en minuscules
     USERNAME = (By.ID, 'wpName1')
     PASSWORD = (By.ID, 'wpPassword1')
     LOGIN_BUTTON = (By.ID, 'wpLoginAttempt')
     LOG_IN_LINK = (By.XPATH, "//a[span[text()='Log in']]")
     KEEP_LOGGED_IN = (By.ID, '.wpRemember')
-    FEATURED_ARTICLE_TITLE = (By.ID, "From_today's_featured_article")
+    FEATURED_ARTICLE_TITLE = (By.XPATH, "//h2[@id='From_today's_featured_article']")
     FEATURED_ARTICLE_CONTENT = (By.ID, "From_today.27s_featured_article")
     DID_U_KNOW_TITLE = (By.ID, "Did_you_know_...")
     DID_U_KNOW_CONTENT = (By.ID, "mp-dyk")
     SISTER_PROJECTS = (By.ID, "Wikipedia's_sister_projects")
     WELCOME = (By.ID, 'mp-welcomecount')
-    LANGUAGE_DROPDOWN = (By.ID, "p-lang-btn-checkbox")
-    LANGUAGE_CHOSEN = (By.XPATH, '//a[@class="autonym" and @lang="he" and @dir="rtl"]')
+    LANGUAGE_DROPDOWN = (By.ID, "p-lang-btn")
+    search_input_lang = (By.ID, 'search')
     SEARCH_BUTTON = (By.CLASS_NAME, "cdx-search-input__end-button")
     SEARCH_FIELD = (By.CLASS_NAME, '.cdx-text-input__input')
     SEARCH_SUGGESTIONS = (By.CLASS_NAME, '.cdx-menu-item__text')
+    welcome_home_page = (By.ID, "firstHeading")
 
 
     def __init__(self, driver):
         super().__init__(driver)
         self.driver.get(TestData.MAIN_URL)
 
-    """Used"""
     def go_to_login_page(self):
         self.driver.get(TestData.LOG_URL)
 
@@ -71,11 +74,16 @@ class HomePage(BasePage):
     def is_search_suggestions_visible(self):
         return self.is_visible(self.SEARCH_SUGGESTIONS)
 
-    def change_language(self):
+    def change_language(self, new_language):
         self.do_click(self.LANGUAGE_DROPDOWN)
-        self.do_send_keys(self.LANGUAGE_CHOSEN)
-        return HomePage(self.driver)
-    '''Stop'''
+        time.sleep(2)
+        self.do_send_keys_actions_chains(self.search_input_lang, new_language)
+        time.sleep(1)
+        self.press_enter()
+
+    def get_welcome_title(self):
+        time.sleep(1)
+        return self.get_text(self.welcome_home_page)
 
     def do_search(self, search_content):
         self.do_send_keys(self.SEARCH_FIELD, search_content)
